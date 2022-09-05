@@ -2,12 +2,15 @@ import { useEffect } from 'react';
 
 import * as THREE from 'three';
 
+/*
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import Stats from 'three/examples/jsm/libs/stats.module';
+*/
 
 import logo from './assets/14.png';
 import blueShirtSmile from './assets/blueShirtSmile.png';
+import altLogo from './assets/logoCJ.png';
 
 function App() {
   useEffect(() => {
@@ -21,7 +24,7 @@ function App() {
       1,
       1000
     );
-    camera.position.z = 96;
+    camera.position.z = 100;
 
     //renderer setup
     const canvas = document.getElementById('myThreeJsCanvas');
@@ -43,7 +46,7 @@ function App() {
     scene.add(spotLight);
 
     //box geometry setup
-    const boxGeometry = new THREE.BoxGeometry(16, 16, 16);
+    const boxGeometry = new THREE.BoxGeometry(30, 30, 30);
     const cubeMaterials = [
       new THREE.MeshBasicMaterial({
         map: new THREE.TextureLoader().load(blueShirtSmile),
@@ -54,11 +57,11 @@ function App() {
         side: THREE.DoubleSide,
       }),
       new THREE.MeshBasicMaterial({
-        map: new THREE.TextureLoader().load(logo),
+        map: new THREE.TextureLoader().load(altLogo),
         side: THREE.DoubleSide,
       }),
       new THREE.MeshBasicMaterial({
-        map: new THREE.TextureLoader().load(logo),
+        map: new THREE.TextureLoader().load(altLogo),
         side: THREE.DoubleSide,
       }),
       new THREE.MeshBasicMaterial({
@@ -75,17 +78,18 @@ function App() {
     scene.add(boxMesh);
 
     //orbit controls setup
-    const controls = new OrbitControls(camera, renderer.domElement);
+    /*const controls = new OrbitControls(camera, renderer.domElement);*/
 
     //FPS stats setup
-    const stats = Stats();
-    document.body.appendChild(stats.dom);
+    /*const stats = Stats();
+    document.body.appendChild(stats.dom);*/
+
     //animation setup
     const animate = () => {
-      boxMesh.rotation.x += 0.02;
-      boxMesh.rotation.y += 0.02;
-      // stats.update();
-      // controls.update();
+      boxMesh.rotation.x += 0.008;
+      boxMesh.rotation.y += 0.008;
+      /* stats.update();
+       controls.update();*/
       renderer.render(scene, camera);
       window.requestAnimationFrame(animate);
     };
