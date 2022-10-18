@@ -29,6 +29,7 @@ function App() {
     //renderer setup
     const canvas = document.getElementById('myThreeJsCanvas');
     const renderer = new THREE.WebGLRenderer({
+      alpha: true,
       canvas,
       antialias: true, //makes 3d object look smooth
     });
