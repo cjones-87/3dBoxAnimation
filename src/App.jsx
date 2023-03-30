@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 /*
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import Stats from 'three/examples/jsm/libs/stats.module';
 */
@@ -13,6 +13,12 @@ import blueShirtSmile from './assets/blueShirtSmile.png';
 import altLogo from './assets/logoCJ.png';
 
 function App() {
+  const [dimensions, setDimensions] = useState({
+    height: innerHeight,
+    width: innerWidth,
+  });
+
+  console.log(localStorage.getItem('lightMode'));
   useEffect(() => {
     //scene setup
     const scene = new THREE.Scene();
@@ -20,7 +26,7 @@ function App() {
     //camera setup
     const camera = new THREE.PerspectiveCamera(
       50,
-      window.innerWidth / window.innerHeight,
+      dimensions.width / dimensions.height,
       1,
       1000
     );
@@ -33,7 +39,7 @@ function App() {
       canvas,
       antialias: true, //makes 3d object look smooth
     });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(dimensions.width, dimensions.height);
     document.body.appendChild(renderer.domElement);
 
     //lighting setup
@@ -79,7 +85,7 @@ function App() {
     scene.add(boxMesh);
 
     //orbit controls setup
-    /*const controls = new OrbitControls(camera, renderer.domElement);*/
+    const controls = new OrbitControls(camera, renderer.domElement);
 
     //FPS stats setup
     /*const stats = Stats();
@@ -89,13 +95,18 @@ function App() {
     const animate = () => {
       boxMesh.rotation.x += 0.008;
       boxMesh.rotation.y += 0.008;
-      /* stats.update();
-       controls.update();*/
+      /* stats.update();*/
+      controls.update();
       renderer.render(scene, camera);
       window.requestAnimationFrame(animate);
     };
     animate();
-  }, []);
+
+    const handleResize = () =>
+      setDimensions({ height: innerHeight, width: innerWidth });
+
+    window.addEventListener('resize', handleResize);
+  }, [dimensions.height, dimensions.width]);
 
   return (
     <div className="App">
