@@ -86,6 +86,7 @@ function App() {
 
     //orbit controls setup
     const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = false;
 
     //FPS stats setup
     /*const stats = Stats();
